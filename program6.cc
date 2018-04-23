@@ -19,6 +19,7 @@ const int MAX_REC_LEN = 25;
 
 using namespace std;
 
+//For holding data about a record
 class BinaryRecord
 {
   public:
@@ -26,6 +27,7 @@ class BinaryRecord
   char strBuf[MAX_REC_LEN];
 };
 
+//For holding date about the header
 class BinaryHeader
 {
   public: 
@@ -34,6 +36,7 @@ class BinaryHeader
   uint64_t numRecs;
 };
 
+//main: reads the binary file, creates a matrix, and then fill it out
 int main()
 {
   //A 2D Array to hold the contents of each cell
@@ -84,9 +87,9 @@ int main()
     }
 
   //Set matrix and its parameters
-  WINDOW	*window;
-  CDKSCREEN	*cdkscreen;
-  CDKMATRIX     *myMatrix;
+  WINDOW *window;
+  CDKSCREEN *cdkscreen;
+  CDKMATRIX *matrix;
 
   const char *rowTitles[] = {"potato", "a", "b", "c", "d", "e"};
   const char *columnTitles[] = {"tomato", "a", "b", "c"};
@@ -99,23 +102,23 @@ int main()
   initCDKColor();
 
   //Create the matrix and ensure that it was created
-  myMatrix = newCDKMatrix(cdkscreen, CENTER, CENTER, MATRIX_HEIGHT, MATRIX_WIDTH, MATRIX_HEIGHT, MATRIX_WIDTH, MATRIX_NAME_STRING, (char **) rowTitles, (char **) columnTitles, boxWidths, boxTypes, 1, 1, ' ', ROW, true, true, false);
+  matrix = newCDKMatrix(cdkscreen, CENTER, CENTER, MATRIX_HEIGHT, MATRIX_WIDTH, MATRIX_HEIGHT, MATRIX_WIDTH, MATRIX_NAME_STRING, (char **) rowTitles, (char **) columnTitles, boxWidths, boxTypes, 1, 1, ' ', ROW, true, true, false);
 
-  if (myMatrix == NULL)
+  if (matrix == NULL)
     {
-      printf("Error creating Matrix\n");
-      _exit(1);
+      cout << "ERROR! Could not create matrix. Exiting..." << endl;
+      return 1;
     }
 
   //Display the matric
-  drawCDKMatrix(myMatrix, true);
+  drawCDKMatrix(matrix, true);
 
   //Display each cell's information
   for(int i = 0; i < MATRIX_WIDTH; i++)
     for(int j = 0; j < MATRIX_HEIGHT; j++)
-      setCDKMatrixCell(myMatrix, j + 1, i + 1, cells[i][j].c_str());
+      setCDKMatrixCell(matrix, j + 1, i + 1, cells[i][j].c_str());
 
-  drawCDKMatrix(myMatrix, true);
+  drawCDKMatrix(matrix, true);
 
   //Pause until a key is pressed
   unsigned char x;
