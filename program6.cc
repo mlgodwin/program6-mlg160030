@@ -48,6 +48,14 @@ int main()
   //Read the header of the file
   BinaryHeader *head = new BinaryHeader();
   ifstream in(MATRIX_NAME_STRING, ios::in | ios::binary);
+  
+  //Ensure the stream opened
+  if(!in)
+    {
+      cout << "ERROR! Could not open " << MATRIX_NAME_STRING << ". Exiting..." << endl;
+      return 1;
+    }
+
   in.read((char *) head, sizeof(BinaryHeader));
   
   //Convert the results to strings
@@ -126,5 +134,6 @@ int main()
 
   //End the program
   endCDK();
+  in.close();
   return 0;
 }
